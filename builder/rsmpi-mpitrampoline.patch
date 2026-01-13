@@ -1,0 +1,424 @@
+diff --git a/mpi-sys/src/rsmpi.c b/mpi-sys/src/rsmpi.c
+index a6e14cc4..f1e3456b 100644
+--- a/mpi-sys/src/rsmpi.c
++++ b/mpi-sys/src/rsmpi.c
+@@ -1,83 +1,144 @@
+ #include "rsmpi.h"
+ 
+-const MPI_Datatype RSMPI_C_BOOL = MPI_C_BOOL;
+-
+-const MPI_Datatype RSMPI_FLOAT = MPI_FLOAT;
+-const MPI_Datatype RSMPI_DOUBLE = MPI_DOUBLE;
+-
+-const MPI_Datatype RSMPI_INT8_T = MPI_INT8_T;
+-const MPI_Datatype RSMPI_INT16_T = MPI_INT16_T;
+-const MPI_Datatype RSMPI_INT32_T = MPI_INT32_T;
+-const MPI_Datatype RSMPI_INT64_T = MPI_INT64_T;
+-
+-const MPI_Datatype RSMPI_UINT8_T = MPI_UINT8_T;
+-const MPI_Datatype RSMPI_UINT16_T = MPI_UINT16_T;
+-const MPI_Datatype RSMPI_UINT32_T = MPI_UINT32_T;
+-const MPI_Datatype RSMPI_UINT64_T = MPI_UINT64_T;
+-
+-const MPI_Datatype RSMPI_FLOAT_COMPLEX = MPI_C_FLOAT_COMPLEX;
+-const MPI_Datatype RSMPI_DOUBLE_COMPLEX = MPI_C_DOUBLE_COMPLEX;
+-
+-const MPI_Datatype RSMPI_DATATYPE_NULL = MPI_DATATYPE_NULL;
+-
+-const MPI_Comm RSMPI_COMM_WORLD = MPI_COMM_WORLD;
+-const MPI_Comm RSMPI_COMM_NULL = MPI_COMM_NULL;
+-const MPI_Comm RSMPI_COMM_SELF = MPI_COMM_SELF;
+-
+-const int RSMPI_COMM_TYPE_SHARED = MPI_COMM_TYPE_SHARED;
+-
+-const MPI_Group RSMPI_GROUP_EMPTY = MPI_GROUP_EMPTY;
+-const MPI_Group RSMPI_GROUP_NULL = MPI_GROUP_NULL;
+-const int RSMPI_UNDEFINED = MPI_UNDEFINED;
+-
+-const int RSMPI_PROC_NULL = MPI_PROC_NULL;
+-const int RSMPI_ANY_SOURCE = MPI_ANY_SOURCE;
+-const int RSMPI_ANY_TAG = MPI_ANY_TAG;
+-
+-const MPI_Message RSMPI_MESSAGE_NULL = MPI_MESSAGE_NULL;
+-const MPI_Message RSMPI_MESSAGE_NO_PROC = MPI_MESSAGE_NO_PROC;
+-
+-const MPI_Request RSMPI_REQUEST_NULL = MPI_REQUEST_NULL;
+-
+-MPI_Status* const RSMPI_STATUS_IGNORE = MPI_STATUS_IGNORE;
+-MPI_Status* const RSMPI_STATUSES_IGNORE = MPI_STATUSES_IGNORE;
+-
+-const int RSMPI_IDENT = MPI_IDENT;
+-const int RSMPI_CONGRUENT = MPI_CONGRUENT;
+-const int RSMPI_SIMILAR = MPI_SIMILAR;
+-const int RSMPI_UNEQUAL = MPI_UNEQUAL;
+-
+-const int RSMPI_THREAD_SINGLE = MPI_THREAD_SINGLE;
+-const int RSMPI_THREAD_FUNNELED = MPI_THREAD_FUNNELED;
+-const int RSMPI_THREAD_SERIALIZED = MPI_THREAD_SERIALIZED;
+-const int RSMPI_THREAD_MULTIPLE = MPI_THREAD_MULTIPLE;
+-
+-const int RSMPI_GRAPH = MPI_GRAPH;
+-const int RSMPI_CART = MPI_CART;
+-const int RSMPI_DIST_GRAPH = MPI_DIST_GRAPH;
+-
+-const int RSMPI_MAX_LIBRARY_VERSION_STRING = MPI_MAX_LIBRARY_VERSION_STRING;
+-const int RSMPI_MAX_PROCESSOR_NAME = MPI_MAX_PROCESSOR_NAME;
+-
+-const MPI_Op RSMPI_MAX = MPI_MAX;
+-const MPI_Op RSMPI_MIN = MPI_MIN;
+-const MPI_Op RSMPI_SUM = MPI_SUM;
+-const MPI_Op RSMPI_PROD = MPI_PROD;
+-const MPI_Op RSMPI_LAND = MPI_LAND;
+-const MPI_Op RSMPI_BAND = MPI_BAND;
+-const MPI_Op RSMPI_LOR = MPI_LOR;
+-const MPI_Op RSMPI_BOR = MPI_BOR;
+-const MPI_Op RSMPI_LXOR = MPI_LXOR;
+-const MPI_Op RSMPI_BXOR = MPI_BXOR;
+-
+-const MPI_Errhandler RSMPI_ERRORS_ARE_FATAL = MPI_ERRORS_ARE_FATAL;
+-const MPI_Errhandler RSMPI_ERRORS_RETURN = MPI_ERRORS_RETURN;
+-
+-const MPI_File RSMPI_FILE_NULL = MPI_FILE_NULL;
+-
+-const MPI_Info RSMPI_INFO_NULL = MPI_INFO_NULL;
+-
+-const MPI_Win RSMPI_WIN_NULL = MPI_WIN_NULL;
++MPI_Datatype RSMPI_C_BOOL;
++
++MPI_Datatype RSMPI_FLOAT;
++MPI_Datatype RSMPI_DOUBLE;
++
++MPI_Datatype RSMPI_INT8_T;
++MPI_Datatype RSMPI_INT16_T;
++MPI_Datatype RSMPI_INT32_T;
++MPI_Datatype RSMPI_INT64_T;
++
++MPI_Datatype RSMPI_UINT8_T;
++MPI_Datatype RSMPI_UINT16_T;
++MPI_Datatype RSMPI_UINT32_T;
++MPI_Datatype RSMPI_UINT64_T;
++
++MPI_Datatype RSMPI_FLOAT_COMPLEX;
++MPI_Datatype RSMPI_DOUBLE_COMPLEX;
++
++MPI_Datatype RSMPI_DATATYPE_NULL;
++
++MPI_Comm RSMPI_COMM_WORLD;
++MPI_Comm RSMPI_COMM_NULL;
++MPI_Comm RSMPI_COMM_SELF;
++
++int RSMPI_COMM_TYPE_SHARED;
++
++MPI_Group RSMPI_GROUP_EMPTY;
++MPI_Group RSMPI_GROUP_NULL;
++int RSMPI_UNDEFINED;
++
++int RSMPI_PROC_NULL;
++int RSMPI_ANY_SOURCE;
++int RSMPI_ANY_TAG;
++
++MPI_Message RSMPI_MESSAGE_NULL;
++MPI_Message RSMPI_MESSAGE_NO_PROC;
++
++MPI_Request RSMPI_REQUEST_NULL;
++
++MPI_Status* RSMPI_STATUS_IGNORE;
++MPI_Status* RSMPI_STATUSES_IGNORE;
++
++int RSMPI_IDENT;
++int RSMPI_CONGRUENT;
++int RSMPI_SIMILAR;
++int RSMPI_UNEQUAL;
++
++int RSMPI_THREAD_SINGLE;
++int RSMPI_THREAD_FUNNELED;
++int RSMPI_THREAD_SERIALIZED;
++int RSMPI_THREAD_MULTIPLE;
++
++int RSMPI_GRAPH;
++int RSMPI_CART;
++int RSMPI_DIST_GRAPH;
++
++int RSMPI_MAX_LIBRARY_VERSION_STRING;
++int RSMPI_MAX_PROCESSOR_NAME;
++
++MPI_Op RSMPI_MAX;
++MPI_Op RSMPI_MIN;
++MPI_Op RSMPI_SUM;
++MPI_Op RSMPI_PROD;
++MPI_Op RSMPI_LAND;
++MPI_Op RSMPI_BAND;
++MPI_Op RSMPI_LOR;
++MPI_Op RSMPI_BOR;
++MPI_Op RSMPI_LXOR;
++MPI_Op RSMPI_BXOR;
++
++MPI_Errhandler RSMPI_ERRORS_ARE_FATAL;
++MPI_Errhandler RSMPI_ERRORS_RETURN;
++
++MPI_File RSMPI_FILE_NULL;
++
++MPI_Info RSMPI_INFO_NULL;
++
++MPI_Win RSMPI_WIN_NULL;
++
++__attribute__((constructor))
++static void rsmpi_init_constants(void) {
++    RSMPI_C_BOOL = MPI_C_BOOL;
++    RSMPI_FLOAT = MPI_FLOAT;
++    RSMPI_DOUBLE = MPI_DOUBLE;
++    RSMPI_INT8_T = MPI_INT8_T;
++    RSMPI_INT16_T = MPI_INT16_T;
++    RSMPI_INT32_T = MPI_INT32_T;
++    RSMPI_INT64_T = MPI_INT64_T;
++    RSMPI_UINT8_T = MPI_UINT8_T;
++    RSMPI_UINT16_T = MPI_UINT16_T;
++    RSMPI_UINT32_T = MPI_UINT32_T;
++    RSMPI_UINT64_T = MPI_UINT64_T;
++    RSMPI_FLOAT_COMPLEX = MPI_C_FLOAT_COMPLEX;
++    RSMPI_DOUBLE_COMPLEX = MPI_C_DOUBLE_COMPLEX;
++    RSMPI_DATATYPE_NULL = MPI_DATATYPE_NULL;
++    RSMPI_COMM_WORLD = MPI_COMM_WORLD;
++    RSMPI_COMM_NULL = MPI_COMM_NULL;
++    RSMPI_COMM_SELF = MPI_COMM_SELF;
++    RSMPI_COMM_TYPE_SHARED = MPI_COMM_TYPE_SHARED;
++    RSMPI_GROUP_EMPTY = MPI_GROUP_EMPTY;
++    RSMPI_GROUP_NULL = MPI_GROUP_NULL;
++    RSMPI_UNDEFINED = MPI_UNDEFINED;
++    RSMPI_PROC_NULL = MPI_PROC_NULL;
++    RSMPI_ANY_SOURCE = MPI_ANY_SOURCE;
++    RSMPI_ANY_TAG = MPI_ANY_TAG;
++    RSMPI_MESSAGE_NULL = MPI_MESSAGE_NULL;
++    RSMPI_MESSAGE_NO_PROC = MPI_MESSAGE_NO_PROC;
++    RSMPI_REQUEST_NULL = MPI_REQUEST_NULL;
++    RSMPI_STATUS_IGNORE = MPI_STATUS_IGNORE;
++    RSMPI_STATUSES_IGNORE = MPI_STATUSES_IGNORE;
++    RSMPI_IDENT = MPI_IDENT;
++    RSMPI_CONGRUENT = MPI_CONGRUENT;
++    RSMPI_SIMILAR = MPI_SIMILAR;
++    RSMPI_UNEQUAL = MPI_UNEQUAL;
++    RSMPI_THREAD_SINGLE = MPI_THREAD_SINGLE;
++    RSMPI_THREAD_FUNNELED = MPI_THREAD_FUNNELED;
++    RSMPI_THREAD_SERIALIZED = MPI_THREAD_SERIALIZED;
++    RSMPI_THREAD_MULTIPLE = MPI_THREAD_MULTIPLE;
++    RSMPI_GRAPH = MPI_GRAPH;
++    RSMPI_CART = MPI_CART;
++    RSMPI_DIST_GRAPH = MPI_DIST_GRAPH;
++    RSMPI_MAX_LIBRARY_VERSION_STRING = MPI_MAX_LIBRARY_VERSION_STRING;
++    RSMPI_MAX_PROCESSOR_NAME = MPI_MAX_PROCESSOR_NAME;
++    RSMPI_MAX = MPI_MAX;
++    RSMPI_MIN = MPI_MIN;
++    RSMPI_SUM = MPI_SUM;
++    RSMPI_PROD = MPI_PROD;
++    RSMPI_LAND = MPI_LAND;
++    RSMPI_BAND = MPI_BAND;
++    RSMPI_LOR = MPI_LOR;
++    RSMPI_BOR = MPI_BOR;
++    RSMPI_LXOR = MPI_LXOR;
++    RSMPI_BXOR = MPI_BXOR;
++    RSMPI_ERRORS_ARE_FATAL = MPI_ERRORS_ARE_FATAL;
++    RSMPI_ERRORS_RETURN = MPI_ERRORS_RETURN;
++    RSMPI_FILE_NULL = MPI_FILE_NULL;
++    RSMPI_INFO_NULL = MPI_INFO_NULL;
++    RSMPI_WIN_NULL = MPI_WIN_NULL;
++}
+ 
+ int* RSMPI_UNWEIGHTED() {
+     return MPI_UNWEIGHTED;
+diff --git a/mpi-sys/src/rsmpi.h b/mpi-sys/src/rsmpi.h
+index b48bef0a..4d57d04f 100644
+--- a/mpi-sys/src/rsmpi.h
++++ b/mpi-sys/src/rsmpi.h
+@@ -6,84 +6,84 @@
+ // here.
+ typedef MPI_Fint RSMPI_Fint;
+ 
+-extern const MPI_Datatype RSMPI_C_BOOL;
++extern MPI_Datatype RSMPI_C_BOOL;
+ 
+-extern const MPI_Datatype RSMPI_FLOAT;
+-extern const MPI_Datatype RSMPI_DOUBLE;
++extern MPI_Datatype RSMPI_FLOAT;
++extern MPI_Datatype RSMPI_DOUBLE;
+ 
+-extern const MPI_Datatype RSMPI_INT8_T;
+-extern const MPI_Datatype RSMPI_INT16_T;
+-extern const MPI_Datatype RSMPI_INT32_T;
+-extern const MPI_Datatype RSMPI_INT64_T;
++extern MPI_Datatype RSMPI_INT8_T;
++extern MPI_Datatype RSMPI_INT16_T;
++extern MPI_Datatype RSMPI_INT32_T;
++extern MPI_Datatype RSMPI_INT64_T;
+ 
+-extern const MPI_Datatype RSMPI_UINT8_T;
+-extern const MPI_Datatype RSMPI_UINT16_T;
+-extern const MPI_Datatype RSMPI_UINT32_T;
+-extern const MPI_Datatype RSMPI_UINT64_T;
++extern MPI_Datatype RSMPI_UINT8_T;
++extern MPI_Datatype RSMPI_UINT16_T;
++extern MPI_Datatype RSMPI_UINT32_T;
++extern MPI_Datatype RSMPI_UINT64_T;
+ 
+-extern const MPI_Datatype RSMPI_FLOAT_COMPLEX;
+-extern const MPI_Datatype RSMPI_DOUBLE_COMPLEX;
++extern MPI_Datatype RSMPI_FLOAT_COMPLEX;
++extern MPI_Datatype RSMPI_DOUBLE_COMPLEX;
+ 
+-extern const MPI_Datatype RSMPI_DATATYPE_NULL;
++extern MPI_Datatype RSMPI_DATATYPE_NULL;
+ 
+-extern const MPI_Comm RSMPI_COMM_WORLD;
+-extern const MPI_Comm RSMPI_COMM_NULL;
+-extern const MPI_Comm RSMPI_COMM_SELF;
++extern MPI_Comm RSMPI_COMM_WORLD;
++extern MPI_Comm RSMPI_COMM_NULL;
++extern MPI_Comm RSMPI_COMM_SELF;
+ 
+-extern const int RSMPI_COMM_TYPE_SHARED;
++extern int RSMPI_COMM_TYPE_SHARED;
+ 
+-extern const MPI_Group RSMPI_GROUP_EMPTY;
+-extern const MPI_Group RSMPI_GROUP_NULL;
+-extern const int RSMPI_UNDEFINED;
++extern MPI_Group RSMPI_GROUP_EMPTY;
++extern MPI_Group RSMPI_GROUP_NULL;
++extern int RSMPI_UNDEFINED;
+ 
+-extern const int RSMPI_PROC_NULL;
+-extern const int RSMPI_ANY_SOURCE;
+-extern const int RSMPI_ANY_TAG;
++extern int RSMPI_PROC_NULL;
++extern int RSMPI_ANY_SOURCE;
++extern int RSMPI_ANY_TAG;
+ 
+-extern const MPI_Message RSMPI_MESSAGE_NULL;
+-extern const MPI_Message RSMPI_MESSAGE_NO_PROC;
++extern MPI_Message RSMPI_MESSAGE_NULL;
++extern MPI_Message RSMPI_MESSAGE_NO_PROC;
+ 
+-extern const MPI_Request RSMPI_REQUEST_NULL;
++extern MPI_Request RSMPI_REQUEST_NULL;
+ 
+-extern MPI_Status* const RSMPI_STATUS_IGNORE;
+-extern MPI_Status* const RSMPI_STATUSES_IGNORE;
++extern MPI_Status* RSMPI_STATUS_IGNORE;
++extern MPI_Status* RSMPI_STATUSES_IGNORE;
+ 
+-extern const int RSMPI_IDENT;
+-extern const int RSMPI_CONGRUENT;
+-extern const int RSMPI_SIMILAR;
+-extern const int RSMPI_UNEQUAL;
++extern int RSMPI_IDENT;
++extern int RSMPI_CONGRUENT;
++extern int RSMPI_SIMILAR;
++extern int RSMPI_UNEQUAL;
+ 
+-extern const int RSMPI_THREAD_SINGLE;
+-extern const int RSMPI_THREAD_FUNNELED;
+-extern const int RSMPI_THREAD_SERIALIZED;
+-extern const int RSMPI_THREAD_MULTIPLE;
++extern int RSMPI_THREAD_SINGLE;
++extern int RSMPI_THREAD_FUNNELED;
++extern int RSMPI_THREAD_SERIALIZED;
++extern int RSMPI_THREAD_MULTIPLE;
+ 
+-extern const int RSMPI_GRAPH;
+-extern const int RSMPI_CART;
+-extern const int RSMPI_DIST_GRAPH;
++extern int RSMPI_GRAPH;
++extern int RSMPI_CART;
++extern int RSMPI_DIST_GRAPH;
+ 
+-extern const int RSMPI_MAX_LIBRARY_VERSION_STRING;
+-extern const int RSMPI_MAX_PROCESSOR_NAME;
++extern int RSMPI_MAX_LIBRARY_VERSION_STRING;
++extern int RSMPI_MAX_PROCESSOR_NAME;
+ 
+-extern const MPI_Op RSMPI_MAX;
+-extern const MPI_Op RSMPI_MIN;
+-extern const MPI_Op RSMPI_SUM;
+-extern const MPI_Op RSMPI_PROD;
+-extern const MPI_Op RSMPI_LAND;
+-extern const MPI_Op RSMPI_BAND;
+-extern const MPI_Op RSMPI_LOR;
+-extern const MPI_Op RSMPI_BOR;
+-extern const MPI_Op RSMPI_LXOR;
+-extern const MPI_Op RSMPI_BXOR;
++extern MPI_Op RSMPI_MAX;
++extern MPI_Op RSMPI_MIN;
++extern MPI_Op RSMPI_SUM;
++extern MPI_Op RSMPI_PROD;
++extern MPI_Op RSMPI_LAND;
++extern MPI_Op RSMPI_BAND;
++extern MPI_Op RSMPI_LOR;
++extern MPI_Op RSMPI_BOR;
++extern MPI_Op RSMPI_LXOR;
++extern MPI_Op RSMPI_BXOR;
+ 
+-extern const MPI_Errhandler RSMPI_ERRORS_ARE_FATAL;
+-extern const MPI_Errhandler RSMPI_ERRORS_RETURN;
++extern MPI_Errhandler RSMPI_ERRORS_ARE_FATAL;
++extern MPI_Errhandler RSMPI_ERRORS_RETURN;
+ 
+-extern const MPI_File RSMPI_FILE_NULL;
++extern MPI_File RSMPI_FILE_NULL;
+ 
+-extern const MPI_Info RSMPI_INFO_NULL;
++extern MPI_Info RSMPI_INFO_NULL;
+ 
+-extern const MPI_Win RSMPI_WIN_NULL;
++extern MPI_Win RSMPI_WIN_NULL;
+ 
+ int* RSMPI_UNWEIGHTED();
+ 
+diff --git a/src/collective.rs b/src/collective.rs
+index a07e28aa..7951ba0f 100644
+--- a/src/collective.rs
++++ b/src/collective.rs
+@@ -1603,9 +1603,10 @@ pub trait Root: AsCommunicator {
+                 errcodes.as_mut_ptr(),
+             );
+         }
++        let mpi_success = unsafe { ffi::MPI_SUCCESS };
+         let fails = errcodes
+             .into_iter()
+-            .filter(|&c| c != ffi::MPI_SUCCESS as i32)
++            .filter(|&c| c != mpi_success as i32)
+             .count();
+         if fails > 0 {
+             Err(MpiError::Spawn(Rank::try_from(fails).unwrap(), maxprocs))
+@@ -1672,9 +1673,10 @@ pub trait Root: AsCommunicator {
+                 errcodes.as_mut_ptr(),
+             );
+         }
++        let mpi_success = unsafe { ffi::MPI_SUCCESS };
+         let fails = errcodes
+             .into_iter()
+-            .filter(|&c| c != ffi::MPI_SUCCESS as i32)
++            .filter(|&c| c != mpi_success as i32)
+             .count();
+         if fails > 0 {
+             Err(MpiError::Spawn(
+diff --git a/src/request.rs b/src/request.rs
+index 7cd1c1f0..b257fd9d 100644
+--- a/src/request.rs
++++ b/src/request.rs
+@@ -114,7 +114,8 @@ pub fn wait_any<'a, D, S: Scope<'a>>(
+     requests: &mut Vec<Request<'a, D, S>>,
+ ) -> Option<(usize, Status)> {
+     let mut mpi_requests: Vec<_> = requests.iter().map(|r| r.as_raw()).collect();
+-    let mut index: i32 = mpi_sys::MPI_UNDEFINED;
++    let mpi_undefined = unsafe { mpi_sys::MPI_UNDEFINED };
++    let mut index: i32 = mpi_undefined;
+     let size: i32 = mpi_requests
+         .len()
+         .try_into()
+@@ -129,7 +130,7 @@ pub fn wait_any<'a, D, S: Scope<'a>>(
+             .1,
+         );
+     }
+-    if index != mpi_sys::MPI_UNDEFINED {
++    if index != mpi_undefined {
+         let u_index: usize = index.try_into().expect("Error while casting i32 to usize");
+         assert!(is_null(mpi_requests[u_index]));
+         let r = requests.remove(u_index);
