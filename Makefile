@@ -1,7 +1,7 @@
 .PHONY: up build run run-mpich run-openmpi all clean
 
 # Run all (default target)
-all: build
+all: run
 
 # Start containers
 up:
